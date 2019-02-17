@@ -7,6 +7,7 @@
 # MPL3115A2 Barometric pressure
 # HTU21D Temp/Humidity sensor
 # TSL2561 Ambient and IR Light sensor
+# Honeywell HPMA115S0 Dust Particulate Laser Interferometer
 # Note Adafruit sensors need both Vin and 3v0 pins tied together to 3v3 or they won't have clean signals
 # I used a 1.6k Pullup resistor each on SDA and SCL to 3v3
 # Libraries for these devices were collected online and modified
