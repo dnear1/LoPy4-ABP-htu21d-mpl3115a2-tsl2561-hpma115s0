@@ -1,3 +1,22 @@
+# Open Source Air Quality sensor project
+# MIT license; Copyright (c) 2019 Daniel Near (dan.e.near@gmail.com)
+# Version 0.1 beta (2019/02/17)
+#
+# This code developed to run on Pycom LoPy4
+# This version works with several Adafruit sensor PCBS
+# MPL3115A2 Barometric pressure
+# HTU21D Temp/Humidity sensor
+# TSL2561 Ambient and IR Light sensor
+# Note Adafruit sensors need both Vin and 3v0 pins tied together to 3v3 or they won't have clean signals
+# I used a 1.6k Pullup resistor each on SDA and SCL to 3v3
+# Libraries for these devices were collected online and modified
+# to work with Pycom's Micropython variant
+# abpkeys.py was included for code legibility but is zeroed out.  Don't publish your private keys!
+# to get keys for these three values, register with TheThingsNetwork, create an application
+# and add a unique device for each Pycom assembly you build. 
+# Configure that device to connect via ABP.
+# You will need to be near a LoRaWAN Gateway or purchase your own
+ 
 from htu21d import HTU21D
 import time
 import math 
@@ -42,9 +61,6 @@ sensor = HTU21D()
 
 tslDev = TSL2561.device()
 tslDev.init()
-f = open('/flash/test.py', 'a') #create file (append mode)
-f.write("I2C Init Complete\n")
-f.close()
 # Initialise LoRa in LORAWAN mode.
 # Please pick the region that matches where you are using the device:
 # Asia = LoRa.AS923
@@ -192,21 +208,21 @@ while (1):
         #    s.send(bytes([bytestream[4], bytestream[5], bytestream[6],bytestream[7]]))
            
         pybytes.send_signal(0, (bytestream[4]<<8)+bytestream[5])
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(1, (bytestream[6]<<8)+bytestream[7])
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(2, '%.1f'%Temperature)
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(3, int(RH))
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(4, '%.1f'%dp)
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(5, '%.2f'%(baro/100))
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(6, lux['lumB'])
-        time.sleep(1)
+        time.sleep(2)
         pybytes.send_signal(7, lux['lumIR'])
-        time.sleep(1)
+        time.sleep(2)
        #pybytes.send_virtual_pin_value(False,2,100)
         #time.sleep(10)
 
@@ -220,4 +236,4 @@ while (1):
     data = s.recv(64)
     print(data)
     print("Go to sleep 5 minutes!")
-    time.sleep(300)    
+    time.sleep(284)    
